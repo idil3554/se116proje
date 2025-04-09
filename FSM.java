@@ -1,4 +1,6 @@
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class FSM implements Serializable {
@@ -23,6 +25,32 @@ public class FSM implements Serializable {
     public String getInitialState() { return initialState; }
     public Set<String> getFinalStates() { return finalStates; }
     public Map<String, Map<String, String>> getTransitions() { return transitions; }
+
+    public static void printStartupInfo() {
+        String versionNo = "1.0.0";  // its gonna be change
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentDateTime = LocalDateTime.now().format(formatter);
+
+        System.out.println("FSM DESIGNER " + versionNo);
+        System.out.println("Current date and time: " + currentDateTime);
+        System.out.println("?");
+
+    }
+    public void processCommand(String command) {
+        int semicolonIndex = command.indexOf(';');
+        if (semicolonIndex != -1) {
+            command = command.substring(0, semicolonIndex).trim();
+        }
+
+        if (command.equalsIgnoreCase("EXIT")) {
+            System.out.println("TERMINATED BY USER");
+            System.exit(0);
+        } else {
+            System.out.println("Processing command: " + command);
+        }
+    }
+
+
 
     @Override
     public String toString() {
